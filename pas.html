@@ -1,0 +1,56 @@
+<html>
+    <head>        
+    </head>
+    <body>    
+        <form>
+            <label for="password">Password</label>
+            
+            <input class="password" name="password" type="password" id="password"/>
+            
+            <p class="error-mesg"></p>
+        </form>
+    </body>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <script>
+        (function(){
+            const passwordStrengthValidation = (password)=>{
+                
+                if(password.length<=16){
+                    return 'Must be at least 16 characters long';
+                }
+                let regex = /^(?=.*[a-z]).+$/; // Lowercase character pattern
+                if(!regex.test(password)){
+                    return 'Must contain a lowercase letter';
+                }
+
+                regex = /^(?=.*[A-Z]).+$/; // Uppercase character pattern
+                if(!regex.test(password) ) {
+                    return 'Must contain an uppercase letter';
+                }
+
+                regex = /^(?=.*[0-9]).+$/; // Special character or number pattern
+                if( !regex.test(password) ) {
+                    return 'Must contain a number';
+                }
+
+                regex = /^(?=.*[\W]).+$/; // Special character or number pattern
+                if( !regex.test(password) ) {
+                    return 'Must contain a special character';
+                }
+
+                return 'success';
+            }
+
+            document.getElementById("password").addEventListener("focusout", ()=>{
+                $(".error-mesg").html('');
+                let password = document.querySelector('.password').value;
+                //alert(password);
+                let message = passwordStrengthValidation(password);
+                console.log(message);
+                if(message!=='success'){                    
+                    $(".error-mesg").html(message);
+                }
+            });
+        })();
+    </script>
+</html>
